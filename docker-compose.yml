@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    image: laravel-oci8:latest
+    ports:
+      - 8080:80
+    volumes:
+      - ./:/var/www
+    environment:
+      #mailhog
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      MAIL_DRIVER: smtp
+      #app
+      APP_PORT: 8080
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+      - 1025:1025

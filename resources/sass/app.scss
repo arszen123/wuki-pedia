@@ -1,0 +1,26 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap-scss/bootstrap';
+
+@import "~bootstrap-tagsinput/dist/bootstrap-tagsinput.css";
+
+@import "menu";
+@import "article";
+
+.bootstrap-tagsinput {
+  line-height: 1.6;
+}
+
+.bootstrap-tagsinput .tag {
+  margin-right: 2px;
+  color: black;
+  background-color: lightblue;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;
+}
