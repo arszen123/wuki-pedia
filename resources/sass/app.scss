@@ -12,6 +12,14 @@
 
 @import "menu";
 @import "article";
+@import "user";
+
+#search {
+  text-align: center;
+  .bootstrap-tagsinput {
+    min-width: 100%;
+  }
+}
 
 .bootstrap-tagsinput {
   line-height: 1.6;

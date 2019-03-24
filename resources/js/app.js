@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 require('./article');
-// window.Vue = require('vue');
+window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,6 +21,8 @@ require('./article');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('languages-form-element', require('./components/LanguageFormElement.vue').default);
+Vue.component('image-input', require('./components/ImageInput.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -28,8 +30,6 @@ require('./article');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-/*
 const app = new Vue({
     el: '#app'
 });
-*/

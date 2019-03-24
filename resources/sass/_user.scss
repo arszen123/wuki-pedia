@@ -1,0 +1,31 @@
+.user-profile-head {
+  margin-bottom: 25px;
+  div {
+    display: inline-block;
+
+    &:first-child {
+      float: left;
+    }
+
+    img {
+      width: inherit;
+      @media(min-width: 768px) {
+        width: 75%;
+      }
+    }
+  }
+}
+
+.user-profile-cards > div {
+  display: inline-block;
+  &:first-child {
+    float: left;
+  }
+  &:last-child {
+    float: right;
+  }
+}
+
+.col-no-padding {
+  padding: 0;
+}

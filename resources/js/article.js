@@ -31,4 +31,11 @@ $(document).ready(function () {
         maxTags: 5,
         focusClass: 'my-focus-class'
     });
+    $('#do-search').on('click', function () {
+        window.location.href = window.location.href + 'search?tags=' + $('#tag').val()
+    })
+    $('#select-language a').on('click', function () {
+        let lang = this.dataset.language;
+        document.cookie = `lang_id=${lang}`
+    })
 });

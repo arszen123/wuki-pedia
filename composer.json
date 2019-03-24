@@ -28,6 +28,7 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "logue/php-merge": "^2.0",
+        "qcod/laravel-imageup": "^1.0",
         "sebastian/diff": "^3.0",
         "yajra/laravel-oci8": "5.8.*"
     },

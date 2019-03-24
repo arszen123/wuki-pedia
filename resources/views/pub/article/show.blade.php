@@ -13,7 +13,7 @@
             </a>
         @endforeach
         <div class="card">
-            <div class="card-header">{{ $articleDetails->title }} @auth <a href="{{ route('article.edit', [$article->id]) }}">EDIT</a> @endauth</div>
+            <div class="card-header">{{ $articleDetails->title }} @auth <a href="{{ route('article.edit', [$article->id]) }}" style="float:right">Edit</a> @endauth</div>
             <div class="card-body">{!! $articleDetails->context !!}</div>
             <div class="card-footer">
                 Language: {{ \HTML::languageByCode($articleDetails->lang_id) }} <br>

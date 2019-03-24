@@ -10764,6 +10764,52 @@ a.text-dark:focus {
   padding: 10px 10px 10px 10px;
 }
 
+.user-profile-head {
+  margin-bottom: 25px;
+}
+
+.user-profile-head div {
+  display: inline-block;
+}
+
+.user-profile-head div:first-child {
+  float: left;
+}
+
+.user-profile-head div img {
+  width: inherit;
+}
+
+@media (min-width: 768px) {
+  .user-profile-head div img {
+    width: 75%;
+  }
+}
+
+.user-profile-cards > div {
+  display: inline-block;
+}
+
+.user-profile-cards > div:first-child {
+  float: left;
+}
+
+.user-profile-cards > div:last-child {
+  float: right;
+}
+
+.col-no-padding {
+  padding: 0;
+}
+
+#search {
+  text-align: center;
+}
+
+#search .bootstrap-tagsinput {
+  min-width: 100%;
+}
+
 .bootstrap-tagsinput {
   line-height: 1.6;
 }

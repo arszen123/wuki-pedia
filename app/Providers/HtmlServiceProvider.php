@@ -18,7 +18,7 @@ class HtmlServiceProvider extends ServiceProvider
             return LanguageHelper::getLanguageByCode($langId);
         });
         \HTML::bind('listTags', function ($tags, $glue = ', ') {
-            if (!is_array($tags)) {
+            if (empty($tags)) {
                 return '';
             }
             $result = [];

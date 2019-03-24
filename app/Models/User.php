@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Cookie;
+use QCod\ImageUp\HasImageUploads;
 
 /**
  * Class User
@@ -14,11 +16,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $email
  * @property string $password
  * @property string $role
+ * @property string $academic_degree
+ * @property string $institution
+ * @property string $specialization
  * @property-read Article[]|Collection $articles
+ * @property-read UserLanguage[]|Collection $languages
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasImageUploads;
     public const ROLE_USER = 'user';
     public const ROLE_RECTOR = 'rector';
     public const ROLE_ADMIN = 'admin';
@@ -29,7 +35,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role'
+        'name', 'email', 'password', 'role',
+        'academic_degree', 'institution', 'specialization',
+        'avatar',
     ];
 
     /**
@@ -50,11 +58,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static $imageFields = [
+        'avatar' => [
+            'image|max:2000'
+        ]
+    ];
+
     protected $table = 'user';
 
     public function articles()
     {
         return $this->hasMany(Article::class, 'author_id', 'id');
+    }
+
+    public function languages()
+    {
+        return $this->hasMany(UserLanguage::class, 'user_id', 'id');
     }
 
     /**
@@ -79,5 +98,28 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function createLanguages($languages)
+    {
+        $result = [];
+        foreach ($languages as $lang) {
+            $result[] = $this->languages()->make($lang);
+        }
+        return $result;
+    }
+
+    public function getAvatarUrl($absolute = true)
+    {
+        if (!$this->avatar) {
+            return '';
+        }
+        $port = config('app.port');
+        return (($absolute ? (config('app.url') . ($port ? ':' . $port : '') . '/') : '') . $this->avatar);
+    }
+
+    public static function getSiteLanguage()
+    {
+        return $_COOKIE['lang_id'] ?? 'en';
     }
 }

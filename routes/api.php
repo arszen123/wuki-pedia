@@ -17,6 +17,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', function (Request $request) {
-    dd($request);
+Route::get('/languages', function () {
+    return \Carbon\Language::all();
+});
+
+Route::get('/language/types', function () {
+    $result = [];
+    foreach (\App\Models\UserLanguage::AVAILABLE_TYPES as $type) {
+        $result[$type] = [
+            'name' => trans("language_type.${type}")
+        ];
+    }
+    return $result;
 });

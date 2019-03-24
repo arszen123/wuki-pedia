@@ -131,4 +131,23 @@ AND AD.article_id IS NULL';
         ]);
     }
 
+    public static function search(array $tags, $langId)
+    {
+        $sql = '
+SELECT a.id, a.updated_at, ad.title
+FROM article a
+LEFT JOIN article_details ad ON ad.article_id = a.id
+INNER JOIN (
+    SELECT article_id, COUNT(*)/COUNT(lang_id) as idx
+    FROM article_tag
+    WHERE tag IN (%s)
+    GROUP BY article_id
+) tags ON a.id = tags.article_id
+WHERE ad.lang_id = %s
+ORDER BY tags.idx desc';
+        $tags = implode("','", $tags);
+        $sql = sprintf($sql, "'${tags}'", "'${langId}'");
+        return \DB::select($sql);
+    }
+
 }
