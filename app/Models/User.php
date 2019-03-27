@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Cookie;
 use QCod\ImageUp\HasImageUploads;
 
 /**
@@ -22,7 +22,7 @@ use QCod\ImageUp\HasImageUploads;
  * @property-read Article[]|Collection $articles
  * @property-read UserLanguage[]|Collection $languages
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasImageUploads;
     public const ROLE_USER = 'user';

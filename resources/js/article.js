@@ -32,8 +32,11 @@ $(document).ready(function () {
         focusClass: 'my-focus-class'
     });
     $('#do-search').on('click', function () {
-        window.location.href = window.location.href + 'search?tags=' + $('#tag').val()
-    })
+        window.location.href = '//' + window.location.host + '/article/search?tags=' + $('#tag').val()
+    });
+    $('#do-suggestion-search').on('click', function () {
+        window.location.href = '//' + window.location.host + '/admin/article/suggest?tags=' + $('#tag').val()
+    });
     $('#select-language a').on('click', function () {
         let lang = this.dataset.language;
         document.cookie = `lang_id=${lang}`

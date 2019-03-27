@@ -17,6 +17,33 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/articles/pending', function () {
+    return \App\Models\ArticleDetailsHistory::where('state', \App\Models\ArticleDetailsHistory::STATE_PENDING)->get();
+});
+
+Route::get('/articles', function () {
+    return \App\Models\ArticleDetailsHistory::whereNotNull('base_id')->get();
+});
+
+Route::get('/users', function () {
+    $result = [];
+    foreach (\App\Models\User::all() as $item) {
+        $result[] = $item->email;
+    }
+    return $result;
+});
+
+Route::get('/db/count', function () {
+    return \App\Models\User::count()
+        + \App\Models\UserLanguage::count()
+        + \App\Models\Article::count()
+        + \App\Models\ArticleDetailsHistory::count()
+        + \App\Models\ArticleDetails::count()
+        + \App\Models\ArticleTag::count()
+        + \App\Models\ArticleTagHistory::count()
+        + \App\Models\ArticleParticipant::count();
+});
+
 Route::get('/languages', function () {
     return \Carbon\Language::all();
 });

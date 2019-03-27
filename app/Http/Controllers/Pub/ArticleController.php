@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Pub;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\User;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Facades\Input;
 
@@ -19,7 +20,7 @@ class ArticleController extends Controller
 
     public function show($id, CacheManager $cache)
     {
-        $langId = Input::get('language');
+        $langId = Input::get('language', User::getSiteLanguage());
         $cacheKey = "article.${id}.${langId}";
         $data = $cache->get($cacheKey);
         if ($data === null) {
@@ -34,6 +35,7 @@ class ArticleController extends Controller
             $data = [
                 'article' => $article,
                 'articleDetails' => $articleDetails,
+                'participants' => $article->getParticipants(),
                 'availableLanguages' => $article->details()
                     ->getQuery()
                     ->where('lang_id', '<>', $articleDetails->lang_id)

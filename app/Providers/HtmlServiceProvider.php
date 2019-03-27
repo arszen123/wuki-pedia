@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\LanguageHelper;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
 class HtmlServiceProvider extends ServiceProvider
@@ -26,6 +27,16 @@ class HtmlServiceProvider extends ServiceProvider
                 $result[] = $tag->tag;
             }
             return implode($glue, $result);
+        });
+        \HTML::bind('listParticipants', function ($users) {
+            $result = [];
+            /** @var User $user */
+            foreach ($users as $user) {
+                $href = route('user.view', [$user->id]);
+                $name = $user->name;
+                $result[] = "<a href=\"${href}\">${name}</a>";
+            }
+            return implode(', ', $result);
         });
     }
 

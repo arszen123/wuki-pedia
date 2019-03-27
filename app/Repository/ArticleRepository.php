@@ -27,7 +27,7 @@ class ArticleRepository
     {
         $articleDetails['author_id'] = $user->id;
         $articleDetails['state'] = ArticleDetailsHistory::STATE_PENDING;
-        $articleDetails['lang_id'] = \Arr::get($articleDetails, 'language');
+        $articleDetails['lang_id'] = \Arr::pull($articleDetails, 'language');
         $details = null;
 
         \DB::transaction(function () use (
@@ -40,6 +40,7 @@ class ArticleRepository
                 $article = $user->articles()->make();
                 $article->save();
             }
+            $tags = \Arr::pull($articleDetails, 'tag');
             /** @var ArticleDetailsHistory $details */
             $details = $article->history()->make($articleDetails);
             $baseId = self::getLastApprovedStateId($details);
@@ -47,7 +48,7 @@ class ArticleRepository
                 $details->base_id = $baseId;
             }
             $details->save();
-            BaseModel::massInsert($details->createTags($articleDetails['tag']));
+            BaseModel::massInsert($details->createTags($tags));
         });
 
         $m = ManagerFactory::getArticleManager($article, $user);
@@ -70,7 +71,7 @@ class ArticleRepository
     {
         $filter = array_merge($filter, [
             'limit' => $limit,
-            'lang_id' => 'hu',
+//            'lang_id' => 'hu',
             'stateApproved' => ArticleDetailsHistory::STATE_APPROVED,
         ]);
         $sql = '
@@ -148,6 +149,77 @@ ORDER BY tags.idx desc';
         $tags = implode("','", $tags);
         $sql = sprintf($sql, "'${tags}'", "'${langId}'");
         return \DB::select($sql);
+    }
+
+    public static function suggestPendingArticles(User $user, $limit = 10)
+    {
+        $sql = "
+SELECT adh.article_id, adh.id AS history_id, adh.title, adh.created_at, adh.lang_id
+FROM user_language ul
+INNER JOIN article_details_history adh ON adh.lang_id = ul.lang_id
+WHERE adh.state = :pendingState
+AND ROWNUM <= :limit
+AND ul.user_id = :userId
+ORDER BY DECODE (ul.type,
+        'a1', 1, 'a2', 2,
+        'b1', 3, 'b2', 4,
+        'c1', 5, 'a2', 6, 7
+        ) DESC
+";
+        $result = \DB::select($sql, [
+            'pendingState' => ArticleDetailsHistory::STATE_PENDING,
+            'limit' => $limit,
+            'userId' => $user->id,
+        ]);
+
+        if (!empty($result)) {
+            return $result;
+        }
+        $sql = "
+SELECT adh.article_id, adh.id AS history_id, adh.title, adh.created_at, adh.lang_id
+FROM article_details_history adh 
+WHERE adh.state = :pendingState
+AND ROWNUM <= :limit
+";
+        return \DB::select($sql, [
+            'pendingState' => ArticleDetailsHistory::STATE_PENDING,
+            'limit' => $limit,
+        ]);
+    }
+
+    public static function searchPendingMRs(User $user, $tags = [], $limit = 10)
+    {
+        $filter = [
+//            'lang_id' => $user->id,
+            'userId' => $user->id,
+            'limit' => $limit,
+            'statePending' => ArticleDetailsHistory::STATE_PENDING,
+        ];
+        $sql = "
+SELECT
+  ADH.article_id,
+  ADH.id as history_id,
+  ADH.created_at,
+  ADH.lang_id,
+  ADH.title
+FROM USER_LANGUAGE UL
+INNER JOIN ARTICLE_DETAILS_HISTORY ADH ON (ADH.lang_id = UL.lang_id AND ADH.state = :statePending)
+INNER JOIN (
+    SELECT article_details_history_id as id, COUNT(*) as idx
+    FROM article_tag_history
+    WHERE tag IN (%s)
+    GROUP BY article_details_history_id
+) tags ON ADH.id = tags.id
+WHERE UL.user_id = :userId
+  AND ROWNUM <= :limit
+ORDER BY tags.idx, DECODE (UL.type,
+        'a1', 1, 'a2', 2,
+        'b1', 3, 'b2', 4,
+        'c1', 5, 'a2', 6, 7
+        ) DESC";
+        $tags = "'" . implode("', '", $tags) . "'";
+        $sql = sprintf($sql, $tags);
+        return \DB::select($sql, $filter);
     }
 
 }

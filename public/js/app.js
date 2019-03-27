@@ -1947,7 +1947,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./bootstrap-tagsinput.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./bootstrap-tagsinput.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css?5ab7");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -16838,7 +16838,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css?5ab7":
 /*!*******************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css ***!
   \*******************************************************************************************************************************************************/
@@ -69732,7 +69732,10 @@ $(document).ready(function () {
     focusClass: 'my-focus-class'
   });
   $('#do-search').on('click', function () {
-    window.location.href = window.location.href + 'search?tags=' + $('#tag').val();
+    window.location.href = '//' + window.location.host + '/article/search?tags=' + $('#tag').val();
+  });
+  $('#do-suggestion-search').on('click', function () {
+    window.location.href = '//' + window.location.host + '/admin/article/suggest?tags=' + $('#tag').val();
   });
   $('#select-language a').on('click', function () {
     var lang = this.dataset.language;

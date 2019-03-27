@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Manager\Article\ArticleManager;
 use App\Manager\ManagerFactory;
 use App\Models\Article;
-use App\Models\ArticleDetails;
 use App\Models\ArticleDetailsHistory;
 use App\Models\User;
 use App\Repository\ArticleRepository;
@@ -52,6 +51,7 @@ class ArticleController extends Controller
         if ($sm->canViewHistory()) {
             return view('pub.article.show', [
                 'article' => $adh->article,
+                'participants' => $adh->article->getParticipants(),
                 'articleDetails' => $adh,
                 'availableLanguages' => []
             ]);
@@ -97,19 +97,15 @@ class ArticleController extends Controller
     {
         $language = Input::get('language');
         $article = Article::find($id);
-        if ($article === null) {
+        if ($article === null || $article->details->isEmpty()) {
             return redirect(route('admin.article.list'));
         }
         $state = $article->isPublished() ? ArticleDetailsHistory::STATE_APPROVED : ArticleDetailsHistory::STATE_PENDING;
-//        $articleDetails = $article->details->first();
         $articleDetails = $article->history()
             ->where('state', $state)
             ->orderByDesc('id')
             ->first();
         if ($language) {
-//            $articleDetails = $article->details()
-//                ->where('lang_id', $language)
-//                ->first();
             $articleDetails = $article->history()
                 ->where('state', $state)
                 ->where('lang_id', $language)
@@ -140,8 +136,11 @@ class ArticleController extends Controller
      */
     public function update(Request $request, User $user, $id)
     {
-        $validator = $this->validateArticle($request, 'article.edit');
         $article = Article::findOrFail($id);
+        if ($article === null || $article->details->isEmpty()) {
+            return redirect(route('admin.article.list'));
+        }
+        $validator = $this->validateArticle($request, 'article.edit', [$id]);
         ArticleRepository::saveDetails($user, $validator->valid(), $article);
         return redirect(route('admin.article.list'));
     }
@@ -181,7 +180,7 @@ class ArticleController extends Controller
      */
     public function updateState(Request $request, User $user, $articleDetailsHistoryId)
     {
-        $validator = $this->validateArticle($request, 'article.state.edit');
+        $validator = $this->validateArticle($request, 'article.state.edit', [$articleDetailsHistoryId]);
         /** @var ArticleDetailsHistory $adh */
         $adh = ArticleDetailsHistory::find($articleDetailsHistoryId);
         $sm = ManagerFactory::getArticleManager($adh->article, $user);
@@ -212,13 +211,32 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function listSuggestion(Request $request, User $user)
+    {
+        if ($user->isUser()) {
+            return redirect('/');
+        }
+        $tags = $request->get('tags');
+        $articles = [];
+        if (!empty($tags)) {
+            $articles = ArticleRepository::searchPendingMRs($user, explode(',', $tags));
+        } else {
+            $articles = ArticleRepository::suggestPendingArticles($user);
+        }
+        return view('admin.article.suggest_list',[
+            'articles' => $articles,
+            'tags'     => $tags,
+        ]);
+    }
+
     /**
      * Returns the validator or redirects to the specified route
      * @param Request $request
      * @param $redirectName
+     * @param array $redirectParams
      * @return \Illuminate\Validation\Validator
      */
-    private function validateArticle(Request $request, $redirectName)
+    private function validateArticle(Request $request, $redirectName, $redirectParams = [])
     {
         $values = $request->all();
         if (is_string($values['tag'])) {
@@ -231,7 +249,7 @@ class ArticleController extends Controller
             'tag'      => 'required|array|min:1|max:5',
         ]);
         if ($validator->fails()) {
-            redirect(route($redirectName))
+            redirect(route($redirectName, $redirectParams))
                 ->withErrors($validator)
                 ->withInput()->send();
         }

@@ -16,11 +16,25 @@
             </li>
         @endif
     @else
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary" href="{{ route('user.view', ['id' => 'me']) }}">
+                Profile
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary" href="{{ route('language.select') }}">
+                Languages
+            </a>
+        </li>
         <li class="nav-item dropdown">
             <a class="nav-link btn btn-outline-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Admin
+                Article
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                @if(!\Auth::user()->isUser())
+                    <a class="dropdown-item" href="{{ route('article.suggest_list') }}">{{ __('Modification requests') }}</a>
+                    <div class="dropdown-divider"></div>
+                @endif
                 <a class="dropdown-item" href="{{ route('admin.article.list') }}">{{ __('My articles') }}</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('article.create') }}">{{ __('Create article') }}</a>

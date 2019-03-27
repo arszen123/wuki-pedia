@@ -38,6 +38,31 @@ INNER JOIN (
 WHERE ad.lang_id = :langId
 ORDER BY tags.idx desc
 ```
+#### Search pending modification requests
+```oracle
+SELECT
+  ADH.article_id,
+  ADH.id as history_id,
+  ADH.created_at,
+  ADH.lang_id,
+  ADH.title
+FROM USER_LANGUAGE UL
+INNER JOIN ARTICLE_DETAILS_HISTORY ADH ON (ADH.lang_id = UL.lang_id AND ADH.state = :statePending)
+INNER JOIN (
+    SELECT article_details_history_id as id, COUNT(*) as idx
+    FROM article_tag_history
+    WHERE tag IN (:tags)
+    GROUP BY article_details_history_id
+) tags ON ADH.id = tags.id
+WHERE UL.user_id = :userId
+  AND ROWNUM <= :limit
+ORDER BY tags.idx, DECODE (UL.type,
+        'a1', 1, 'a2', 2,
+        'b1', 3, 'b2', 4,
+        'c1', 5, 'a2', 6, 7
+        ) DESC
+```
+---
 ### Trivial ORACLE statements (Maybe these will be accepted too)
 #### Get top authors
 ```oracle
@@ -49,7 +74,6 @@ WHERE ROWNUM <= ?
 GROUP BY U.id, U.name
 ORDER BY badge DESC
 ```
----
 ### Get user pending articles
 ```oracle
 SELECT  A.id, ADH.id AS history_id, ADH.title, A.created_at, ADH.lang_id
@@ -75,4 +99,44 @@ WHERE
   ROWNUM <= :limit
   AND AD.lang_id = :lang_id
 ORDER BY A.created_at DESC
+```
+### Suggest modification request by the user language knowledge
+```oracle
+SELECT
+       adh.article_id,
+       adh.id AS history_id,
+       adh.title,
+       adh.created_at,
+       adh.lang_id
+FROM user_language ul
+INNER JOIN article_details_history adh ON adh.lang_id = ul.lang_id
+WHERE adh.state = :pendingState
+AND ROWNUM <= :limit
+ORDER BY DECODE (ul.type,
+        'a1', 1, 'a2', 2,
+        'b1', 3, 'b2', 4,
+        'c1', 5, 'a2', 6, 7
+        ) DESC
+```
+```oracle
+SELECT
+       adh.article_id,
+       adh.id AS history_id,
+       adh.title,
+       adh.created_at,
+       adh.lang_id,
+       CASE
+         WHEN ul.type = 'a1' THEN 1
+         WHEN ul.type = 'a2' THEN 2
+         WHEN ul.type = 'b1' THEN 3
+         WHEN ul.type = 'b2' THEN 4
+         WHEN ul.type = 'c1' THEN 5
+         WHEN ul.type = 'c2' THEN 6
+         ELSE 7
+       END AS order_number
+FROM user_language ul
+INNER JOIN article_details_history adh ON adh.lang_id = ul.lang_id
+WHERE adh.state = :pendingState
+AND ROWNUM <= :limit
+ORDER BY order_number DESC
 ```

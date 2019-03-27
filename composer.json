@@ -39,6 +39,7 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^2.0",
+        "nwidart/db-exporter": "^1.1",
         "phpunit/phpunit": "^7.5"
     },
     "config": {

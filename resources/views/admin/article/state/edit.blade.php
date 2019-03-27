@@ -21,18 +21,6 @@
                             @endif
                         </div>
                     </div>
-                    <div class="justify-content-center" style="display: flex">
-                        <div class="col-md-4">
-                            <h3>Local</h3>
-                            <div>{!! $local->context !!}</div>
-                        </div>
-                        <div class="col-md-4">
-                            <h3>Remote</h3>
-                            <div>{!! $remote->context !!}</div></div>
-                        <div class="col-md-4">
-                            <h3>Base</h3>
-                            <div>{!! $base->context !!}</div></div>
-                    </div>
                     <div class="form-group">
                         <label for="context" class="col-form-label text-md-right justify-content-center">{{ __('Context') }}</label>
 

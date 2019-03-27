@@ -37,7 +37,18 @@ class Article extends Model
 
     public function participant()
     {
-        return $this->hasManyThrough(User::class, 'article_participant', 'id', 'user_id', 'user_id', 'author_id');
+        return $this->hasManyThrough(User::class, ArticleParticipant::class, 'article_id', 'id', 'article_id', 'user_id');
+    }
+
+    public function getParticipants()
+    {
+        /** @var ArticleParticipant[] $participants */
+        $participants = ArticleParticipant::where('article_id', $this->id)->get();
+        $users = [];
+        foreach ($participants as $participant) {
+            $users[] = $participant->user;
+        }
+        return $users;
     }
 
     public function history()
@@ -48,5 +59,23 @@ class Article extends Model
     public function isPublished()
     {
         return $this->details->isNotEmpty();
+    }
+
+    public function saveParticipant(User $user)
+    {
+        $exists = false;
+        foreach ($this->participant as $participant) {
+            if ($participant->id === $user->id) {
+                $exists = true;
+                break;
+            }
+
+        }
+        if (!$exists) {
+            $part = new ArticleParticipant();
+            $part->article_id = $this->id;
+            $part->user_id = $user->id;
+            $part->save();
+        }
     }
 }

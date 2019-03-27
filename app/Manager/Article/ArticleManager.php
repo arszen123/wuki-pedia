@@ -110,6 +110,11 @@ abstract class ArticleManager
         $remote = $local->article->details()
             ->where('lang_id', $local->lang_id)
             ->first();
+
+        if ($remote === null || $base === null) {
+            return $local;
+        }
+
         $diff = [];
         foreach ($remote->getMergingKeys() as $item) {
             try {
@@ -122,6 +127,7 @@ abstract class ArticleManager
                 $diff[$item] = $ex->getMerged();
             }
         }
+
         $adh = new ArticleDetailsHistory($diff);
         $adh->article_id = $local->article_id;
         $adh->lang_id = $local->lang_id;

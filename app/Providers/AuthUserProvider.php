@@ -15,7 +15,8 @@ class AuthUserProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(User::class, function () {
-            return \Auth::user() ?? new User();
+            $user = \Auth::user() ?? new User();
+            return $user;
         });
     }
 
