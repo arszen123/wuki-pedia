@@ -22,7 +22,7 @@ $col = empty($userPendingArticles) ? 12 : 6;
                             <p>{{ $article->updated_at->format('Y-m-d') }}</p>
                             </div>
                             <div>
-                                <a href="{{ route('article.statistic', [$article->id]) }}"><button class="btn btn-primary">Statistic</button></a>
+{{--                                <a href="{{ route('article.statistic', [$article->id]) }}"><button class="btn btn-primary">Statistic</button></a>--}}
                                 <a href="{{ route('article.edit', [$article->id]) }}"><button class="btn btn-primary">Edit</button></a>
                                 <a href="{{ route('article.mod.requests', [$article->id]) }}"><button class="btn btn-primary">Modification Requests</button></a>
                             </div>

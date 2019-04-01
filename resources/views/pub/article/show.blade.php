@@ -21,7 +21,7 @@
                 Last pdated at {{ $article->updated_at }} <br>
                 Author: {{ $article->author->name }} <br>
                 Tags: {{ \HTML::listTags($articleDetails->tag) }}<br/>
-                Participants: {{ \HTML::listParticipants($participants) }}
+                Participants: {!! \HTML::listParticipants($participants) !!}
             </div>
         </div>
     </div>

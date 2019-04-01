@@ -71,7 +71,6 @@ class ArticleRepository
     {
         $filter = array_merge($filter, [
             'limit' => $limit,
-//            'lang_id' => 'hu',
             'stateApproved' => ArticleDetailsHistory::STATE_APPROVED,
         ]);
         $sql = '
@@ -190,7 +189,6 @@ AND ROWNUM <= :limit
     public static function searchPendingMRs(User $user, $tags = [], $limit = 10)
     {
         $filter = [
-//            'lang_id' => $user->id,
             'userId' => $user->id,
             'limit' => $limit,
             'statePending' => ArticleDetailsHistory::STATE_PENDING,

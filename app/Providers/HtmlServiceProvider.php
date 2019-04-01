@@ -33,7 +33,7 @@ class HtmlServiceProvider extends ServiceProvider
             /** @var User $user */
             foreach ($users as $user) {
                 $href = route('user.view', [$user->id]);
-                $name = $user->name;
+                $name = strip_tags($user->name);
                 $result[] = "<a href=\"${href}\">${name}</a>";
             }
             return implode(', ', $result);

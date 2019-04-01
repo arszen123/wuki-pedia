@@ -13,7 +13,7 @@ Route::group(['prefix' => '/admin'], function () {
 
     Route::get('/article/history/{historyId}/view', 'Admin\ArticleController@viewByHistoryId')->name('article.history.view');
 
-    Route::get('/article/{id}/statistic', 'Admin\ArticleController@showStatistic')->name('article.statistic');
+//    Route::get('/article/{id}/statistic', 'Admin\ArticleController@showStatistic')->name('article.statistic');
 
     Route::get('/article/suggest', 'Admin\ArticleController@listSuggestion')->name('article.suggest_list');
 });
