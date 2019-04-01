@@ -1,0 +1,22 @@
+﻿INSERT INTO H744547.ARTICLE_DETAILS (ARTICLE_ID,LANG_ID,TITLE,CONTEXT) VALUES 
+(24,'hu','Amet et dolores qui dolorem est est cupiditate.',TO_CLOB('Veniam eligendi similique ipsam placeat dolores. Adipisci aspernatur molestiae eveniet ipsa. Ullam hic et et assumenda vel est officiis. Ducimus enim explicabo omnis quam.'))
+,(25,'en','Ipsam laudantium facilis expedita aliquid.',TO_CLOB('Deleniti est voluptatem perferendis est fugiat exercitationem. Placeat et aut magnam qui deleniti ipsa aut dolores. Ex et omnis qui rerum. Amet laborum recusandae possimus hic.'))
+,(26,'et','Velit quia odio qui suscipit ut.',TO_CLOB('Ut vel qui consequatur et. Doloremque odit minus reiciendis aliquam sapiente quasi eum ex. Qui iusto error rerum cum quia deserunt nobis.'))
+,(27,'es','Quasi odio et qui atque ut.',TO_CLOB('Voluptate tempora rem error id voluptatem dolorem. Ut est aut sequi corrupti ut exercitationem sed quis. Non voluptas hic qui sequi eaque dolores.'))
+,(28,'hu','Sed accusantium suscipit ipsa nemo.',TO_CLOB('Aliquid qui porro corrupti ut. Ut et totam ea beatae minima ut dolorem. Est recusandae quasi repudiandae qui.'))
+,(29,'en','Soluta et cumque ut doloribus voluptate.',TO_CLOB('Non est velit eius beatae inventore accusamus voluptatem. Autem saepe unde modi rerum autem necessitatibus. Eos non eaque voluptas iusto. Voluptatem iste aperiam delectus unde consectetur rerum.'))
+,(30,'et','Soluta dolores dolorem fugit dolor neque ut voluptas.',TO_CLOB('Voluptatem nam asperiores incidunt et ut eum illum. Voluptatem blanditiis vitae adipisci laborum nihil numquam. Qui cupiditate praesentium quo placeat consequatur porro tempora. Dolore ea quisquam sint autem laboriosam est.'))
+,(31,'es','Eum a ab quia fugit et voluptatem praesentium.',TO_CLOB('Deserunt ea modi dolores adipisci dignissimos perspiciatis eligendi ut. Qui fugiat qui repellendus blanditiis eos eius.'))
+,(5,'hu','Explicabo magnam consequatur quam quae.',TO_CLOB('Maxime recusandae ab voluptatibus similique. Autem temporibus voluptatem consectetur officia at eos. Rerum ut velit minima doloremque accusamus doloribus. Id aperiam qui facere autem aperiam maxime.'))
+,(6,'en','Vel cum repudiandae non.',TO_CLOB('Totam adipisci dolorem odit ea. Iste sed voluptatem debitis facere facilis ut.'))
+;
+INSERT INTO H744547.ARTICLE_DETAILS (ARTICLE_ID,LANG_ID,TITLE,CONTEXT) VALUES 
+(12,'hu','Quia at sit perferendis.',TO_CLOB('Consequatur dolore dolorem dolorum totam voluptatem optio. Cumque est aut ut consequuntur neque deleniti id. Cum nobis rerum nulla ipsum.'))
+,(13,'en','Suscipit aut dolor quis laboriosam necessitatibus aut accusamus.',TO_CLOB('Illum nemo ut nam commodi amet id similique. Est voluptatem dolorum amet nesciunt molestiae nihil veniam. Natus ea illo nulla natus deserunt ex sit. Harum mollitia qui consectetur. Est qui nihil dolores voluptatem.'))
+,(14,'et','Minima enim nihil aspernatur eligendi.',TO_CLOB('Sequi nam at officia pariatur facere. Non dolores mollitia aut et architecto odio. Distinctio dolores ut eligendi aut harum aut. Ut rerum maxime mollitia deleniti odit. Sed quibusdam eos molestias sunt et dolores.'))
+,(15,'es','Dignissimos nam et non dolorem excepturi.',TO_CLOB('Fuga autem vel eveniet cumque dolores. Voluptas hic tempore nisi sed a quisquam.'))
+,(16,'hu','Libero est odio iusto ut omnis.',TO_CLOB('Quidem magnam voluptatem dicta quaerat et alias. Qui delectus quia aut minima neque consequatur. Vitae quidem consequuntur nulla laudantium voluptas repellat. Consequatur a dolore repellendus occaecati earum.'))
+,(17,'en','Vel commodi temporibus adipisci esse.',TO_CLOB('Aut sint labore maiores numquam. Rerum architecto id tempore aperiam tenetur et aut qui. Distinctio suscipit quis magni dolores. Possimus a sint sunt nulla.'))
+,(18,'et','Ipsam quia dolores laborum cumque ut et in optio.',TO_CLOB('Perferendis ducimus error sunt aut ea dolore. Dolores eos consequatur minima asperiores. Minima voluptas temporibus perspiciatis et corporis autem.'))
+,(19,'es','Quod nemo amet aliquid ut error nihil suscipit.',TO_CLOB('Et et ipsam ut perspiciatis nihil. Tenetur at ea odit ipsum corporis magnam laudantium. Eligendi eos esse dolorum voluptatem reiciendis. Dolor ut accusantium nisi sunt exercitationem odit.'))
+;
