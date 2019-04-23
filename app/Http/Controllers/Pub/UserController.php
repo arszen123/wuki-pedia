@@ -45,7 +45,7 @@ class UserController extends Controller
     {
         $data = $request->all();
         $user->fill(array_except($data, 'avatar'));
-        $languages = $user->createLanguages($data['lang']);
+        $languages = $user->createLanguages($data['lang'] ?? []);
         \DB::transaction(function () use (
             $user,
             $languages,

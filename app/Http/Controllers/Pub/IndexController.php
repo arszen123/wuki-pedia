@@ -21,7 +21,7 @@ class IndexController extends Controller
     public function index(CacheManager $cache)
     {
         $data = $cache->get('pub.home.data');
-        if ($data === null) {
+        if (true || $data === null) {
             $data = [
                 'tags' => '',
                 'articlePartial' => 'pub.partial.article_index',

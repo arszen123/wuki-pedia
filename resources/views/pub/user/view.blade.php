@@ -37,11 +37,13 @@
                     <div class="card-header">Publications</div>
                     <div class="card-body">
                         @foreach($user->articles()->limit(10)->get() as $article)
-                            <div class="language-item">
-                                <a href="{{ route('article.show', [$article->id]) }}">
-                                    {{ $article->details->isNotEmpty() ?$article->details->first()->title : 'Emprt' }}
-                                </a>
-                            </div>
+                            @if ($article->details->isNotEmpty())
+                                <div class="language-item">
+                                    <a href="{{ route('article.show', [$article->id]) }}">
+                                        {{ $article->details->first()->title }}
+                                    </a>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>

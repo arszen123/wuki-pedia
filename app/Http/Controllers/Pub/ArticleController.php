@@ -23,7 +23,7 @@ class ArticleController extends Controller
         $langId = Input::get('language', User::getSiteLanguage());
         $cacheKey = "article.${id}.${langId}";
         $data = $cache->get($cacheKey);
-        if ($data === null) {
+        if (true || $data === null) {
             $article = Article::find($id);
             $articleDetails = $article->details->first();
             if ($langId) {

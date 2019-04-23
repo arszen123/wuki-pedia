@@ -29,7 +29,7 @@ class SearchController extends Controller
             'tags' => $tagsString,
             'articlePartial' => 'pub.partial.article_list',
             'topUsers' => UserRepository::getTopEditors(),
-            'topArticles' => ArticleRepository::search($tagsArray, User::getSiteLanguage()),
+            'topArticles' => ArticleRepository::search($tagsArray),
         ]);
     }
 
