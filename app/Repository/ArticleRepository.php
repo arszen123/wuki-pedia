@@ -20,7 +20,7 @@ class ArticleRepository
     /**
      * @param User $user
      * @param array $articleDetails
-     * @param null $article
+     * @param null|\App\Models\Article $article
      * @throws \Exception|\Throwable
      */
     public static function saveDetails(User $user, array $articleDetails, $article = null)
@@ -48,6 +48,7 @@ class ArticleRepository
                 $details->base_id = $baseId;
             }
             $details->save();
+            $article->saveParticipant($user);
             BaseModel::massInsert($details->createTags($tags));
         });
 

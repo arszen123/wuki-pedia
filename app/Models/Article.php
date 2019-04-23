@@ -63,7 +63,7 @@ class Article extends Model
     public function saveParticipant(User $user)
     {
         $exists = false;
-        foreach ($this->participant as $participant) {
+        foreach ($this->getParticipants() as $participant) {
             if ($participant->id === $user->id) {
                 $exists = true;
                 break;
